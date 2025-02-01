@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Meta tags -->
     <meta charset="UTF-8">
@@ -75,7 +76,8 @@
         }
 
         .content {
-            margin-top: 10px;  /* Reduced from 20px */
+            margin-top: 10px;
+            /* Reduced from 20px */
             padding: 0;
             overflow: visible;
         }
@@ -172,7 +174,7 @@
 
         .blog-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .blog-emoji {
@@ -217,7 +219,8 @@
         }
 
         .social-links .fa-linkedin:hover {
-            color: #005582;  /* A slightly darker shade for hover state */
+            color: #005582;
+            /* A slightly darker shade for hover state */
         }
 
         .social-links img {
@@ -251,7 +254,7 @@
             border-radius: 0 4px 4px 0;
         }
 
-        blockquote > blockquote {
+        blockquote>blockquote {
             background-color: #f1f3f5;
             border-left-color: #2980b9;
         }
@@ -263,7 +266,8 @@
             margin: 1em 0;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
@@ -286,7 +290,7 @@
             list-style: none;
         }
 
-        details > * {
+        details>* {
             margin-left: 0;
             padding-left: 0;
         }
@@ -322,7 +326,7 @@
             font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace;
             color: #333;
         }
-        
+
         p code {
             font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace;
             color: #333;
@@ -336,6 +340,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav>
         <button class="nav-button active" onclick="showSection('portfolio')">Portfolio</button>
@@ -355,13 +360,15 @@
                     <div class="social-links">
                         <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
                         <a href="https://huggingface.co/yourusername" target="_blank">
-                            <img src="assets/huggingface_logo-noborder.svg" alt="Hugging Face" style="width: 26px; height: 26px; vertical-align: middle;">
+                            <img src="assets/huggingface_logo-noborder.svg" alt="Hugging Face"
+                                style="width: 26px; height: 26px; vertical-align: middle;">
                         </a>
-                        <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://linkedin.com/in/yourusername" target="_blank"><i
+                                class="fab fa-linkedin"></i></a>
                         <!-- Add more social links as needed -->
                     </div>
                 </div>
-                
+
                 <div class="experience">
                     <h2>Experience</h2>
                     <div class="experience-item">
@@ -388,7 +395,7 @@
                         </div>
                         <div class="experience-date">2020 - Present</div>
                     </div>
-                    
+
                     <h2>Education</h2>
                     <div class="experience-item">
                         <div class="experience-item-content">
@@ -435,17 +442,17 @@
             }
 
             const posts = await loadBlogPosts();
-            
+
             if (posts.length === 0) {
                 blogGrid.innerHTML = '<p>No blog posts found.</p>';
                 return;
             }
-            
+
             blogGrid.innerHTML = posts.map(post => `
-                <a href="#${post.slug}" 
-                   class="blog-card" 
-                   onclick="showBlogPost('${post.slug}')"
-                   style="background-color: ${post.theme || '#f9f9f9'}">
+                <a href="#/post/${post.slug}" 
+                class="blog-card" 
+                onclick="showBlogPost('${post.slug}')"
+                style="background-color: ${post.theme || '#f9f9f9'}">
                     <div class="blog-emoji">${post.emoji || '📝'}</div>
                     <h2>${post.title}</h2>
                     <p class="blog-date">${new Date(post.date).toLocaleDateString()}</p>
@@ -463,6 +470,9 @@
                 
                 document.querySelectorAll('.content').forEach(el => el.style.display = 'none');
                 postSection.style.display = 'block';
+                
+                // Update URL with post slug
+                history.pushState(null, '', `#/post/${slug}`);
             } catch (error) {
                 console.error('Error loading blog post:', error);
             }
@@ -474,13 +484,25 @@
             
             document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
             document.querySelector(`button[onclick="showSection('${section}')"]`).classList.add('active');
+
+            // Update URL hash based on section
+            if (section === 'portfolio') {
+                history.pushState(null, '', '#/');
+            } else if (section === 'blog' && !window.location.hash.includes('/post/')) {
+                history.pushState(null, '', '#/blog');
+            }
         }
 
         // Add this function to handle initial URL state
         function handleInitialUrl() {
             const hash = window.location.hash;
-            if (hash && hash.length > 1) {
-                const slug = hash.substring(1); // Remove the # character
+    
+            if (!hash || hash === '#/' || hash === '#') {
+                showSection('portfolio');
+            } else if (hash === '#/blog') {
+                showSection('blog');
+            } else if (hash.startsWith('#/post/')) {
+                const slug = hash.replace('#/post/', '');
                 showSection('blog');
                 showBlogPost(slug);
             }
@@ -494,10 +516,10 @@
 
         async function renderMarkdown(markdown) {
             const { marked } = window;
-            
+
             // Configure marked with the footnote extension
             marked.use(window.markedFootnote());
-            
+
             // Add this block to prevent KaTeX from processing code blocks
             const codeBlocks = new Map();
             let codeBlockCount = 0;
@@ -536,7 +558,7 @@
             });
 
             marked.setOptions({
-                highlight: function(code, lang) {
+                highlight: function (code, lang) {
                     if (lang && Prism.languages[lang]) {
                         try {
                             return `<pre class="line-numbers language-${lang}"><code class="language-${lang}">${Prism.highlight(code, Prism.languages[lang], lang)}</code></pre>`;
@@ -554,7 +576,7 @@
 
             // Convert markdown to HTML
             const html = marked.parse(markdown);
-            
+
             // Use a small delay to ensure content is in the DOM
             setTimeout(() => {
                 Prism.highlightAll();
@@ -564,4 +586,5 @@
         }
     </script>
 </body>
+
 </html>
