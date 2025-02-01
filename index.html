@@ -26,6 +26,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Custom Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <style>
         /* Previous styles remain the same */
         * {
@@ -110,6 +115,9 @@
         .info {
             flex: 2;
             min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            height: 300px;  /* Set this to match your image height */
         }
 
         .experience {
@@ -197,10 +205,11 @@
         }
 
         .social-links {
-            margin-top: 20px;
+            margin-top: auto;
+            padding-top: 1em;
             display: flex;
             gap: 15px;
-            justify-content: flex-end;
+            justify-content: flex-end;  /* This will align items to the right */
         }
 
         .social-links a {
@@ -338,6 +347,33 @@
             overflow-x: auto;
             padding: 1em 0;
         }
+
+        /* Research interests styling */
+        .research-interests {
+            margin-top: 1em;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .research-interests ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        
+        .research-interests li {
+            font-size: 1em;
+            color: #222222;
+        }
+
+        .research-interests li:not(:last-child)::after {
+            content: "•";
+            margin-left: 8px;
+            color: #666;
+        }
     </style>
 </head>
 
@@ -355,15 +391,28 @@
                     <img src="assets/photo.png" alt="Profile Picture">
                 </div>
                 <div class="info">
-                    <h1>Your Name</h1>
-                    <p>Your introduction goes here. Write about yourself, your interests, and what you do.</p>
+                    <h1>Metin Usta</h1>
+                    <p>Hello there, I am a Research and Development Engineer at Yapı Kredi Technology.</p>
+                    
+                    <div class="research-interests">
+                        <p>My research interests include, but are not limited to:</p>
+                        <ul>
+                            <li>Time Series Forecasting</li>
+                            <li>Explainable AI</li>
+                            <li>Knowledge Distillation</li>
+                            <li>Large Language Models</li>
+                            <li>Deep Learning</li>
+                            <li>Computer Vision</li>
+                            <li>Natural Language Processing</li>
+                        </ul>
+                    </div>
                     <div class="social-links">
-                        <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://huggingface.co/yourusername" target="_blank">
+                        <a href="https://github.com/MetinUsta" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://huggingface.co/Metin" target="_blank">
                             <img src="assets/huggingface_logo-noborder.svg" alt="Hugging Face"
                                 style="width: 26px; height: 26px; vertical-align: middle;">
                         </a>
-                        <a href="https://linkedin.com/in/yourusername" target="_blank"><i
+                        <a href="https://linkedin.com/in/metin-usta/" target="_blank"><i
                                 class="fab fa-linkedin"></i></a>
                         <!-- Add more social links as needed -->
                     </div>
@@ -373,37 +422,37 @@
                     <h2>Experience</h2>
                     <div class="experience-item">
                         <div class="experience-item-content">
-                            <h3>Job Title</h3>
-                            <p>Company Name</p>
-                            <p>Description of your role and achievements.</p>
+                            <h3>Assistant Research and Development Engineer</h3>
+                            <p>Yapı Kredi Technology</p>
+                            <p>I work on developing and deploying large language models to improve customer experience and streamline banking operations.</p>
                         </div>
-                        <div class="experience-date">2020 - Present</div>
+                        <div class="experience-date">2023 - Present</div>
                     </div>
                     <div class="experience-item">
                         <div class="experience-item-content">
-                            <h3>Job Title</h3>
-                            <p>Company Name</p>
-                            <p>Description of your role and achievements.</p>
+                            <h3>Undergraduate Research Fellow</h3>
+                            <p>Yıldız Technical University - TÜBİTAK 1001 Program</p>
+                            <p>As part of a research project, I developed time series forecasting models to analyze and predict traffic patterns using real-world data from the Istanbul Metropolitan Municipality.</p>
                         </div>
-                        <div class="experience-date">2020 - Present</div>
+                        <div class="experience-date">2021 - 2023</div>
                     </div>
                     <div class="experience-item">
                         <div class="experience-item-content">
-                            <h3>Job Title</h3>
-                            <p>Company Name</p>
-                            <p>Description of your role and achievements.</p>
+                            <h3>Software Engineer Intern</h3>
+                            <p>Yapı Kredi Technology</p>
+                            <p>Developed a microservice for parsing and verifying E-Yazışma Paketi (EYP 2.0) to ensure compliance with defined standards.</p>
                         </div>
-                        <div class="experience-date">2020 - Present</div>
+                        <div class="experience-date">2022 - 2022</div>
                     </div>
 
                     <h2>Education</h2>
                     <div class="experience-item">
                         <div class="experience-item-content">
-                            <h3>Degree Name</h3>
-                            <p>University Name</p>
-                            <p>Additional details about your education.</p>
+                            <h3>Bachelor of Science in Computer Engineering</h3>
+                            <p>Yıldız Technical University</p>
+                            <p>Grade: 3.81/4.00</p>
                         </div>
-                        <div class="experience-date">Graduation Year</div>
+                        <div class="experience-date">2019 - 2023</div>
                     </div>
                 </div>
             </div>
