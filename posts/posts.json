@@ -1,0 +1,20 @@
+{
+    "posts": [
+      {
+        "title": "My First Blog Post",
+        "date": "2024-02-01",
+        "slug": "my-first-post",
+        "excerpt": "A brief preview of my first blog post...",
+        "emoji": "✨",
+        "theme": "#f0f4ff"
+      },
+      {
+        "title": "Another Blog Post",
+        "date": "2024-01-15",
+        "slug": "another-post",
+        "excerpt": "A brief preview of another post...",
+        "emoji": "🚀",
+        "theme": "#fff0f0"
+      }
+    ]
+  }
