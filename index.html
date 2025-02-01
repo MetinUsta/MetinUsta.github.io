@@ -488,7 +488,8 @@
             // Update URL hash based on section
             if (section === 'portfolio') {
                 history.pushState(null, '', '#/');
-            } else if (section === 'blog' && !window.location.hash.includes('/post/')) {
+            } else if (section === 'blog') {
+                // Always update to #/blog when showing the blog listing
                 history.pushState(null, '', '#/blog');
             }
         }
