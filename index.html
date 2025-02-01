@@ -476,9 +476,20 @@
             document.querySelector(`button[onclick="showSection('${section}')"]`).classList.add('active');
         }
 
-        // Initial render
+        // Add this function to handle initial URL state
+        function handleInitialUrl() {
+            const hash = window.location.hash;
+            if (hash && hash.length > 1) {
+                const slug = hash.substring(1); // Remove the # character
+                showSection('blog');
+                showBlogPost(slug);
+            }
+        }
+
+        // Modify your DOMContentLoaded event listener
         document.addEventListener('DOMContentLoaded', () => {
             renderBlogPosts();
+            handleInitialUrl();
         });
 
         async function renderMarkdown(markdown) {
