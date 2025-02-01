@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio & Blog</title>
+
+    <!-- Markdown processing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-highlight/lib/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-footnote/dist/index.umd.min.js"></script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Syntax highlighting -->
+    <link href="prism-themes/prism-theme-github-copilot.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+
+    <!-- Math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Custom Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/" class="nav-button">Portfolio</a>
+        <a href="/blog.html" class="nav-button active">Blog</a>
+
+        <link rel="stylesheet" href="styles.css">
+    </nav>
+
+    <main>
+        <section id="blog" class="content">
+            <div class="blog-grid" id="blog-posts">
+                <!-- Blog posts will be inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        async function loadBlogPosts() {
+            try {
+                const response = await fetch('/posts/posts.json');
+                const data = await response.json();
+                return data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                return [];
+            }
+        }
+
+        async function renderBlogPosts() {
+            const blogGrid = document.getElementById('blog-posts');
+            if (!blogGrid) {
+                console.error('Blog posts container not found!');
+                return;
+            }
+
+            const posts = await loadBlogPosts();
+
+            if (posts.length === 0) {
+                blogGrid.innerHTML = '<p>No blog posts found.</p>';
+                return;
+            }
+
+            blogGrid.innerHTML = posts.map(post => `
+                <a href="post.html?slug=${post.slug}" 
+                class="blog-card" 
+                onclick="showBlogPost('${post.slug}')"
+                style="background-color: ${post.theme || '#f9f9f9'}">
+                    <div class="blog-emoji">${post.emoji || '📝'}</div>
+                    <h2>${post.title}</h2>
+                    <p class="blog-date">${new Date(post.date).toLocaleDateString()}</p>
+                    <p>${post.excerpt}</p>
+                </a>
+            `).join('');
+        }
+
+        function showBlogPost(slug) {
+            window.location.href = `post.html?slug=${slug}`;
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBlogPosts();
+        });
+    </script>
+</body>
+
+</html>

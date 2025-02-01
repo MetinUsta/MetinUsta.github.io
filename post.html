@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio & Blog</title>
+
+    <!-- Markdown processing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-highlight/lib/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-footnote/dist/index.umd.min.js"></script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Syntax highlighting -->
+    <link href="prism-themes/prism-theme-github-copilot.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+
+    <!-- Math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Custom Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/" class="nav-button">Portfolio</a>
+        <a href="/blog.html" class="nav-button">Blog</a>
+    </nav>
+
+    <main>
+        <section id="post" class="content blog-post">
+            <!-- Blog post content will be rendered here -->
+        </section>
+    </main>
+
+    <script>
+        async function renderMarkdown(markdown) {
+            const { marked } = window;
+
+            // Configure marked with the footnote extension
+            marked.use(window.markedFootnote());
+
+            // Add this block to prevent KaTeX from processing code blocks
+            const codeBlocks = new Map();
+            let codeBlockCount = 0;
+
+            // Temporarily replace code blocks with placeholders
+            markdown = markdown.replace(/```[\s\S]*?```/g, (match) => {
+                const placeholder = `CODE_BLOCK_${codeBlockCount}`;
+                codeBlocks.set(placeholder, match);
+                codeBlockCount++;
+                return placeholder;
+            });
+
+            // Process math blocks before markdown
+            markdown = markdown.replace(/\$\$([\s\S]*?)\$\$/g, (match, p1) => {
+                try {
+                    return katex.renderToString(p1.trim(), { displayMode: true });
+                } catch (e) {
+                    console.error('KaTeX error:', e);
+                    return match;
+                }
+            });
+
+            // Process inline math before markdown
+            markdown = markdown.replace(/\$(.*?)\$/g, (match, p1) => {
+                try {
+                    return katex.renderToString(p1.trim(), { displayMode: false });
+                } catch (e) {
+                    console.error('KaTeX error:', e);
+                    return match;
+                }
+            });
+
+            // Restore code blocks
+            codeBlocks.forEach((value, key) => {
+                markdown = markdown.replace(key, value);
+            });
+
+            marked.setOptions({
+                highlight: function (code, lang) {
+                    if (lang && Prism.languages[lang]) {
+                        try {
+                            return `<pre class="line-numbers language-${lang}"><code class="language-${lang}">${Prism.highlight(code, Prism.languages[lang], lang)}</code></pre>`;
+                        } catch (e) {
+                            console.error(e);
+                            return code;
+                        }
+                    }
+                    return code;
+                },
+                langPrefix: 'language-',
+                gfm: true,
+                breaks: true
+            });
+
+            // Convert markdown to HTML
+            const html = marked.parse(markdown);
+
+            // Use a small delay to ensure content is in the DOM
+            setTimeout(() => {
+                Prism.highlightAll();
+            }, 0);
+
+            return html;
+        }
+    </script>
+
+    <script>
+        async function loadPost() {
+            // const slug = window.location.pathname.split('/').pop().replace('.html', '');
+            const urlParams = new URLSearchParams(window.location.search)
+            const slug = urlParams.get('slug')
+            try {
+                const response = await fetch(`/posts/${slug}.md`);
+                const markdown = await response.text();
+                document.getElementById('post').innerHTML = await renderMarkdown(markdown);
+            } catch (error) {
+                console.error('Error loading blog post:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPost();
+        });
+    </script>
+</body>
+
+</html>
