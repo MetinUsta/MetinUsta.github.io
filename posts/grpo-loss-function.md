@@ -2,29 +2,29 @@
 
 *Published: 02-02-2025*
 
-Recently, researchers from DeepSeek published a paper[^1] on their new reasoning model, DeepSeek R1, which has caused a big buzz in the AI community. Many people are excited about the model's performance and its low training and inference costs. However, I was particularly interested in the loss function used to train the model.
+Recently, researchers from DeepSeek published a paper[^1] on their new reasoning model, **DeepSeek R1**, which has caused a big buzz in the AI community. Many people are excited about the model's performance and its low training and inference costs. However, I was particularly interested in the loss function used to train the model.
 
-The paper uses a previously proposed loss function called GRPO (Group Relative Policy Optimization), which is used to train the model in a reinforcement learning setting. In this post, I will share my understanding of it.
+The paper uses a previously proposed loss function called **GRPO (Group Relative Policy Optimization)**, which is used to train the model in a reinforcement learning setting. In this post, I will share my understanding of it.
 
 [^1]: https://arxiv.org/abs/2501.12948
 
 ## What is GRPO?
 
-GRPO is an online learning algorithm meaning that during training, the trained model's own generations are used to update its parameters.
+GRPO is an **online learning** algorithm, meaning that during training, the trained model's own generations are used to update its parameters.
 
-GRPO aims to maximize the advantage of the model's generations while at the same time preventing the model from diverging too much from the reference policy.
+GRPO aims to **maximize the advantage** of the model's generations while at the same time **preventing the model from diverging too much** from the reference policy.
 
 ## How does it work?
 
 The GRPO algorithm consists of four steps:
-### 1. Generationg Completions
+### 1. Generating Completions
 We sample a batch of prompts from the training dataset and generate $G$ completions for each prompt.
 Each completion is denoted as $o_i$
 
 ### 2. Computing the Advantage
-For each generation in the set $G$, we compute a reward score using either a reward model or a predefined reward function.
+For each generation in the set $G$, we compute a **reward score** using either a **reward model** or a **predefined reward function**.
 
-To be able to relative comparisons among the generations within a given set, we standardize the rewards using the mean and standard deviation of the generation set $G$. Resulting scores are called **Advantage**.
+To be able to do relative comparisons among the generations within a given set, we standardize the rewards using the mean and standard deviation of the generation set $G$. Resulting scores are called **Advantage**.
 
 ### 3. Estimating the KL Divergence
 
@@ -33,7 +33,7 @@ Instead of directly calculating the KL Divergence between the logits of the curr
 [^2]: http://joschu.net/blog/kl-approx.html
 
 ### 4. Computing the Loss
-This is where we put all previous calculations together to construct the loss function which is defined as follows:
+This is where, we put all previous calculations together to construct the loss function which is defined as follows:
 
 $$
 \mathcal{L}_{\text{GRPO}}(\theta) = -\frac{1}{G} \sum_{i=1}^{G} \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \left[ \min\!\Biggl( \frac{\pi_\theta(o_{i,t} \mid q, o_{i,<t})}{\pi_{\theta_{\text{old}}}(o_{i,t} \mid q, o_{i,<t})} \, \widehat{A}_{i,t}, \; \text{clip}\!\Bigl(\frac{\pi_\theta(o_{i,t} \mid q, o_{i,<t})}{\pi_{\theta_{\text{old}}}(o_{i,t} \mid q, o_{i,<t})},\, 1-\epsilon,\, 1+\epsilon\Bigr) \, \widehat{A}_{i,t} \Biggr) - \beta \, \mathbb{D}_{\text{KL}}\!\left[\pi_\theta \,\|\, \pi_{\text{ref}}\right] \right]
@@ -80,15 +80,15 @@ Overall, this expression represents the probability assigned by the policy model
 
 We see the same expression in the denominator, but with an exception: it is marked as **"no grad"**.
 
-This means that during backpropagation, the gradients of this term is not calculated. This allows us to simulate storing the old policy model.
+This means that during backpropagation, the gradients of this term are not calculated. This allows us to simulate storing the old policy model.
 In fact in the original paper [^3], this term is denoted as $ \pi_{\theta_{old}}(o_{i,t} \mid q, o_{i,<t}) $.
 
 **What Does the Ratio Represent?**
 
 By taking the ratio of these two probabilities for token $t$, we calculate how the updated policy compares to the frozen (reference) policy.
 
-* If the ratio is bigger than 1, the updated policy assigns a higher probability to generating this token than the old policy.
-* If the ratio is less than 1, the updated policy assigns a lower probability than the old policy.
+* If the ratio is **bigger than 1**, the updated policy assigns a higher probability to generating this token than the old policy.
+* If the ratio is **less than 1**, the updated policy assigns a lower probability than the old policy.
 
 ### 2. Advantage
 
@@ -105,17 +105,17 @@ For a given group of completions generated for a single prompt, we compute rewar
 
 [^3]: https://arxiv.org/abs/2402.03300
 
-### 3. Importance Sampling Ratio × Advantage
+#### 2.1 Importance Sampling Ratio × Advantage
 
-In the loss function, we multiply the importance sampling ratio by the advantage. This operation helps:
+In the loss function, we multiply the importance sampling ratio by the advantage. This operation helps to:
 
 * **Emphasize** the advantage of new trajectories that have become more likely under the updated policy compared to the old policy.
 * **De-emphasize** the advantage of new trajectories that have already become less likely compared to the old policy.
 
 In simpler terms:
 
-* If our current policy already assigns a lower probability to a token than the old policy, the advantage should have less impact on the update.
-* If our current policy assigns a higher probability to a token, we should take the advantage more seriously when adjusting the trajectory.
+* If our current policy already assigns a **lower probability** to a token than the old policy, the advantage **should have less impact** on the update.
+* If our current policy assigns a **higher probability** to a token, we should take the advantage **more seriously** when adjusting the trajectory.
 
 To understand this better, let's consider the below scenarios:
 
@@ -191,7 +191,7 @@ Output: -0.56 -> Still penalizes the model but lower than the original penalty.
 
 Finally, The KL Divergence term is included to ensure that while the model is being optimized to favor tokens leading to higher rewards, it does not stray too far from a trusted reference policy, $\pi_{ref}$.
 
-In the huggingface implementation, it is possible to provide a custom reference policy. If none is provided, the detached version of the original model is used as $\pi_{ref}$.
+In the huggingface implementation, it is possible to provide a custom reference policy. If none is provided, **the detached version** of the original model is used as $\pi_{ref}$.
 
 
 For performance reasons, instead of computing the exact KL Divergence, we use an approximation:
@@ -200,9 +200,9 @@ $$
 \mathbb{D}_{\text{KL}}\!\left[\pi_\theta \,\|\, \pi_{\text{ref}}\right] = \frac{\pi_{\text{ref}}(o_{i,t} \mid q, o_{i,<t})}{\pi_\theta(o_{i,t} \mid q, o_{i,<t})} - \log \frac{\pi_{\text{ref}}(o_{i,t} \mid q, o_{i,<t})}{\pi_\theta(o_{i,t} \mid q, o_{i,<t})} - 1
 $$
 
-If we look back at the original loss function, we can see that KL divergence value is multiplied by $B$ and then subtracted from the loss. Here:
+If we look back at the original loss function, we can see that KL divergence value is multiplied by $\beta$ and then subtracted from the loss. Here:
 
-* The parameter $B$ controls the strength of this penalty.
+* The parameter $\beta$ controls the strength of this penalty.
 * Since the overall loss function is minimized, subtracting the KL term means that any increase in divergence (i.e. the KL value grows) increases the loss.
 * This discourages the model from drifting too far from the reference policy.
 
