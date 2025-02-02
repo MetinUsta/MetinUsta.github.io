@@ -105,11 +105,12 @@ nav {
 .profile {
     flex: 1;
     min-width: 250px;
+    width: 100%;
 }
 
 .profile img {
     width: 100%;
-    max-width: 200px;
+    max-width: 100%;
     height: auto;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -222,6 +223,11 @@ nav {
     padding-left: 20px;
 }
 
+.blog-post table {
+    margin: 1em auto; /* Center the table by setting left and right margins to auto */
+    width: auto; /* Allow the table to take its natural width */
+}
+
 
 .blog-post img {
     width: 100%;
@@ -311,6 +317,12 @@ nav {
     }
 }
 
+@media (max-width: 450px){
+    .profile img {
+        max-width: 100%;
+    }
+}
+
 main {
     flex: 1;
     overflow: visible;
@@ -334,8 +346,9 @@ blockquote>blockquote {
 /* Table styling */
 table {
     border-collapse: collapse;
-    width: 100%;
     margin: 1em 0;
+    overflow-x: auto;
+    display: block;
 }
 
 th,
@@ -346,7 +359,8 @@ td {
 }
 
 th {
-    background-color: #f8f9fa;
+    background-color: #3b3b3b;
+    color: white;
 }
 
 tr:nth-child(even) {
