@@ -110,7 +110,9 @@ For a given group of completions generated for a single prompt, we compute rewar
 In the loss function, we multiply the importance sampling ratio by the advantage. This operation helps to:
 
 * **Emphasize** the advantage of new trajectories that have become more likely under the updated policy compared to the old policy.
-* **De-emphasize** the advantage of new trajectories that have already become less likely compared to the old policy.
+* **De-emphasize** the advantage of new trajectories that have already become less likely compared to the old policy.[^4]
+
+[^4]: https://ai.stackexchange.com/questions/7685/why-is-the-log-probability-replaced-with-the-importance-sampling-in-the-loss-fun
 
 In simpler terms:
 
