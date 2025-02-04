@@ -3,20 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    /* scrollbar-width: none; */
 }
-
-/* body {
-    line-height: 1.6;
-    color: #333;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px 40px 40px 40px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-} */
 
 .wide-page{
     line-height: 1.6;
@@ -28,17 +15,15 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    /* scrollbar-width: auto; */
 }
 
-/* For WebKit browsers (Chrome, Safari) */
 *::-webkit-scrollbar {
-    width: 12px; /* Set width of the scrollbar */
+    width: 12px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #ccc; /* Set color of the scrollbar thumb */
-    border-radius: 6px; /* Optional: round the corners */
+    background-color: #ccc;
+    border-radius: 6px;
 }
 
 .narrow-page{
@@ -53,14 +38,12 @@
     overflow-y: auto;
 }
 
-
 nav {
     display: flex;
     justify-content: flex-end;
     gap: 20px;
     margin-bottom: 0px;
     padding: 10px 0;
-    /* border-bottom: 1px solid #e0e0e0; */
 }
 
 .nav-button {
@@ -85,7 +68,6 @@ nav {
 
 .content {
     margin-top: 10px;
-    /* Reduced from 20px */
     padding: 0;
     overflow: visible;
 }
@@ -121,8 +103,6 @@ nav {
     min-width: 300px;
     display: flex;
     flex-direction: column;
-    height: 300px;
-    /* Set this to match your image height */
 }
 
 .experience {
@@ -201,7 +181,6 @@ nav {
 }
 
 .blog-post {
-    /* max-width: 800px; */
     margin: 0 auto;
     padding: 40px;
     border: 1px solid #e0e0e0;
@@ -224,10 +203,9 @@ nav {
 }
 
 .blog-post table {
-    margin: 1em auto; /* Center the table by setting left and right margins to auto */
-    width: auto; /* Allow the table to take its natural width */
+    margin: 1em auto;
+    width: auto;
 }
-
 
 .blog-post img {
     width: 100%;
@@ -242,7 +220,6 @@ nav {
     display: flex;
     gap: 15px;
     justify-content: flex-end;
-    /* This will align items to the right */
 }
 
 .social-links a {
@@ -262,7 +239,6 @@ nav {
 
 .social-links .fa-linkedin:hover {
     color: #005582;
-    /* A slightly darker shade for hover state */
 }
 
 .social-links img {
@@ -271,9 +247,30 @@ nav {
     vertical-align: middle;
 }
 
+/* Research interests styling */
+.research-interests {
+    margin: 1em 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.research-interests ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin-top: 0.5em;
+}
+
+.research-interests li {
+    font-size: 1em;
+    color: #222222;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+}
+
 @media (max-width: 768px) {
     .portfolio {
         flex-direction: column;
+        padding: 20px;
     }
 
     .blog-grid {
@@ -294,6 +291,11 @@ nav {
 
     .social-links {
         justify-content: center;
+        margin-top: 1em;
+    }
+
+    .narrow-page {
+        padding: 20px;
     }
 }
 
@@ -314,6 +316,11 @@ nav {
     .experience-date {
         text-align: left;
         margin-left: 0;
+        margin-top: 0.5em;
+    }
+
+    .portfolio {
+        padding: 15px;
     }
 }
 
@@ -329,7 +336,6 @@ main {
     width: 100%;
 }
 
-/* Blockquote styling */
 blockquote {
     border-left: 4px solid #3498db;
     margin: 1.5em 0;
@@ -343,7 +349,6 @@ blockquote>blockquote {
     border-left-color: #2980b9;
 }
 
-/* Table styling */
 table {
     border-collapse: collapse;
     margin: 1em 0;
@@ -367,7 +372,6 @@ tr:nth-child(even) {
     background-color: #f8f9fa;
 }
 
-/* Collapsible sections */
 details {
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -398,7 +402,6 @@ details[open] summary {
     margin-bottom: 0.5em;
 }
 
-/* Update code block styling */
 pre {
     background-color: #f8f9fa;
     border: 1px solid #e0e0e0;
@@ -419,37 +422,9 @@ p code {
     background-color: #fafafa;
 }
 
-/* Style for math blocks */
 .math-block {
     overflow-x: auto;
     padding: 1em 0;
-}
-
-/* Research interests styling */
-.research-interests {
-    margin-top: 1em;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.research-interests ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-}
-
-.research-interests li {
-    font-size: 1em;
-    color: #222222;
-}
-
-.research-interests li:not(:last-child)::after {
-    content: "•";
-    margin-left: 8px;
-    color: #666;
 }
 
 .katex-display {
