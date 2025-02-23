@@ -2,10 +2,18 @@
     "posts": [
       {
         "title": "GRPO - Loss Function",
-        "date": "01-02-2025",
+        "date": "02-01-2025",
         "slug": "grpo-loss-function",
         "excerpt": "A brief explanation of the loss function used in GRPO.",
         "emoji": "➕➖✖️➗",
+        "theme": "#f0f4ff"
+      },
+      {
+        "title": "Training LLaMA-3-8B w/ GRPO on Math Questions",
+        "date": "02-23-2025",
+        "slug": "grpo-training",
+        "excerpt": "A small experiment on training LLaMA-3-8B with GRPO on math domain.",
+        "emoji": "🦙🔢",
         "theme": "#f0f4ff"
       }
     ]
