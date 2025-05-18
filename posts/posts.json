@@ -15,6 +15,14 @@
         "excerpt": "A small experiment on training LLaMA-3-8B with GRPO on math domain.",
         "emoji": "🦙🔢",
         "theme": "#f0f4ff"
+      },
+      {
+        "title": "Test Time Reinforcement Learning (TTRL)",
+        "date": "05-18-2025",
+        "slug": "test-time-reinforcement-learning",
+        "excerpt": "Some notes and experiments on TTRL.",
+        "emoji": "🤖💬✖️✔️",
+        "theme": "#f0f4ff"
       }
     ]
   }
