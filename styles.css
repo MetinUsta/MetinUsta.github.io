@@ -5,23 +5,23 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Lato', sans-serif;
-    color: #2c3e50; /* Primary Text */
+    color: #2c3e50; 
 }
 
-body { /* Explicitly set body font */
+body { 
     font-family: 'Lato', sans-serif;
-    background-color: #ecf0f1; /* Body Background */
-    color: #2c3e50; /* Primary Text */
+    
+    color: #2c3e50; 
 }
 
-h1, h2, h3, h4, h5, h6 { /* Headings */
+h1, h2, h3, h4, h5, h6 { 
     font-family: 'Montserrat', sans-serif;
-    color: #2c3e50; /* Primary Text (or a slightly darker variant if needed) */
+    color: #2c3e50; 
 }
 
 .wide-page{
     line-height: 1.6;
-    /* color: #333; DEPRECATED by body color */
+    
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 40px 40px 40px;
@@ -36,13 +36,13 @@ h1, h2, h3, h4, h5, h6 { /* Headings */
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #bdc3c7; /* Scrollbar thumb */
+    background-color: #bdc3c7; 
     border-radius: 6px;
 }
 
 .narrow-page{
     line-height: 1.6;
-    /* color: #333; DEPRECATED by body color */
+    
     max-width: 900px;
     margin: 0 auto;
     padding: 20px 40px 40px 40px;
@@ -63,22 +63,22 @@ nav {
 .nav-button {
     padding: 4px 16px;
     border: none;
-    background-color: #ffffff; /* Nav button background */
+    background-color: #f0f0f0; 
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Updated transition */
+    transition: background-color 0.3s ease, color 0.3s ease; 
     text-decoration: none;
-    color: #2c3e50; /* Nav button text */
-    font-family: 'Lato', sans-serif; /* Ensure nav buttons use Lato */
+    color: #333; 
+    font-family: 'Lato', sans-serif; 
 }
 
 .nav-button:hover {
-    background-color: #eaf2f8; /* Lighter shade of accent or darker nav bg */
+    background-color: #e0e0e0; 
 }
 
 .nav-button.active {
-    background-color: #3498db; /* Accent color */
-    color: #ffffff; /* White text on active */
+    background-color: #333; 
+    color: #ffffff; 
 }
 
 .content {
@@ -93,9 +93,9 @@ nav {
     gap: 20px;
     margin-bottom: 40px;
     padding: 40px;
-    border: 1px solid #bdc3c7; /* Subtle Border */
+    border: 1px solid #bdc3c7; 
     border-radius: 8px;
-    background-color: #ffffff; /* Card/Section Background */
+    background-color: #ffffff; 
     overflow: visible;
 }
 
@@ -131,8 +131,8 @@ nav {
 .experience h2 {
     margin-bottom: 20px;
     padding-top: 20px;
-    border-top: 1px solid #bdc3c7; /* Subtle Border */
-    font-family: 'Montserrat', sans-serif; /* Ensure experience section titles use Montserrat */
+    border-top: 1px solid #bdc3c7; 
+    font-family: 'Montserrat', sans-serif; 
 }
 
 .experience-item {
@@ -147,7 +147,7 @@ nav {
 }
 
 .experience-date {
-    color: #7f8c8d; /* Secondary Text */
+    color: #7f8c8d; 
     font-size: 0.9em;
     min-width: 150px;
     text-align: right;
@@ -155,21 +155,21 @@ nav {
 }
 
 .experience-item h3 {
-    color: #2c3e50; /* Primary text for sub-headings within experience */
+    color: #2c3e50; 
     margin-bottom: 0.2em;
-    font-family: 'Montserrat', sans-serif; /* Ensure experience item titles use Montserrat */
+    font-family: 'Montserrat', sans-serif; 
 }
 
 .title-name {
     font-weight: bold;
-    /* margin-bottom: 0.5em; */
+    
     display: block;
 }
 
 .experience-titles {
     margin-left: 20px;
     padding-left: 20px;
-    border-left: 2px solid #bdc3c7; /* Subtle Border */
+    border-left: 2px solid #bdc3c7; 
 }
 
 .experience-title-item {
@@ -188,7 +188,7 @@ nav {
     top: 0.5em;
     width: 10px;
     height: 10px;
-    background-color: #7f8c8d; /* Secondary Text for the dot */
+    background-color: #7f8c8d; 
     border-radius: 50%;
 }
 
@@ -202,7 +202,7 @@ nav {
 }
 
 .experience-date {
-    color: #7f8c8d; /* Secondary Text */
+    color: #7f8c8d; 
     font-size: 0.9em;
     margin-top: 0.2em;
 }
@@ -214,70 +214,62 @@ nav {
 .blog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px; /* Ensure adequate spacing */
-    padding: 40px; /* Seems fine, consistent with portfolio */
+    gap: 20px;
+    padding: 40px;
     margin-bottom: 40px;
     border: 1px solid #bdc3c7; 
     border-radius: 8px;
-    background-color: #ffffff; /* Card/Section Background is appropriate for the grid container */
+    background-color: #ffffff;
 }
 
 .blog-card {
-    padding: 1.5em; /* 24px */
+    padding: 20px;
     background-color: #ffffff; 
     border-radius: 8px;
-    border: 1px solid #e0e0e0; /* Lighter, more subtle border */
+    border: 1px solid #e0e0e0;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smoother transition */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
     color: #2c3e50; 
     position: relative;
-    display: flex; 
-    flex-direction: column; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* New box shadow */
-    height: 100%; /* For equal height cards in a row */
 }
 
 .blog-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(44, 62, 80, 0.15); /* Updated hover box-shadow */
+    box-shadow: 0 8px 16px rgba(44, 62, 80, 0.15); 
 }
 
 .blog-emoji {
-    font-size: 1.3em; /* Slightly reduced */
-    margin-bottom: 0.75em; /* Adjusted margin */
+    font-size: 1.5em; 
+    margin-bottom: 0.75em; 
 }
 
 .blog-card h2 { 
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.3rem; /* Updated font size */
-    margin-bottom: 0.4em; /* Updated margin */
-    color: #2c3e50; /* Ensure primary text color */
-    line-height: 1.3; /* Existing good line-height */
+    font-size: 1.4rem; 
+    color: #2c3e50; 
+    line-height: 1.3; 
 }
 
-/* Style for the blog card excerpt paragraph */
+
 .blog-card p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #34495e; /* Slightly lighter than primary text */
-    flex-grow: 1; /* Allows excerpt to expand */
-    margin-bottom: 1em; /* Space before the date */
+    font-size: 1rem;
+    
 }
 
 .blog-date {
-    color: #7f8c8d; 
-    font-size: 0.8em; /* Slightly smaller */
-    margin-top: auto; /* Push to the bottom */
-    text-align: left; /* Align to left */
+    color: #666; 
+    font-size: 0.8em; 
+    margin-top: auto; 
+    text-align: left; 
 }
 
 .blog-post {
     margin: 0 auto;
     padding: 40px;
-    border: 1px solid #bdc3c7; /* Subtle Border */
+    border: 1px solid #bdc3c7; 
     border-radius: 8px;
-    background-color: #ffffff; /* Card/Section Background */
+    background-color: #ffffff; 
 }
 
 .blog-post p{
@@ -315,23 +307,23 @@ nav {
 }
 
 .social-links a {
-    color: #3498db; /* Accent Color for social links */
+    color: #3498db; 
     text-decoration: none;
     font-size: 24px;
-    transition: color 0.3s ease; /* Updated transition */
+    transition: color 0.3s ease; 
 }
 
 .social-links a:hover {
-    color: #2980b9; /* Darker Accent for hover */
+    color: #2980b9; 
 }
 
-/* Assuming .fa-linkedin should also follow the new accent color scheme */
+
 .social-links .fa-linkedin {
-    color: #3498db; /* Accent Color */
+    color: #3498db; 
 }
 
 .social-links .fa-linkedin:hover {
-    color: #2980b9; /* Darker Accent */
+    color: #2980b9; 
 }
 
 .social-links img {
@@ -340,7 +332,7 @@ nav {
     vertical-align: middle;
 }
 
-/* Research interests styling */
+
 .research-interests {
     margin: 1em 0;
 }
@@ -356,7 +348,7 @@ nav {
 
 .research-interests li {
     font-size: 1em;
-    color: #2c3e50; /* Primary Text */
+    color: #2c3e50; 
     line-height: 1.4;
     display: inline-flex;
     align-items: center;
@@ -365,22 +357,9 @@ nav {
 .research-interests li:not(:last-child)::after {
     content: "—";
     margin: 0 12px;
-    color: #7f8c8d; /* Secondary Text */
+    color: #7f8c8d; 
 }
 
-/* Tablet and larger phone improvements */
-@media (max-width: 992px) {
-    .wide-page, .narrow-page {
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-
-    .portfolio, .blog-grid, .blog-post {
-        padding: 30px;
-    }
-}
-
-/* Merging and enhancing existing 768px breakpoint */
 @media (max-width: 768px) {
     .research-interests ul {
         flex-direction: column;
@@ -394,25 +373,18 @@ nav {
     .research-interests li:not(:last-child)::after {
         display: none;
     }
-
-    .wide-page {
-        padding: 20px; /* Simplified padding */
-    }
-
-    .narrow-page {
-        padding: 20px; /* Consistent padding */
-    }
-    
+    .portfolio {
+        flex-direction: column;
         padding: 20px;
     }
 
     .blog-grid {
         grid-template-columns: 1fr;
-        padding: 20px; /* Added padding adjustment */
+        padding: 20px; 
     }
     
     .blog-post {
-        padding: 20px; /* Added padding adjustment */
+        padding: 20px; 
     }
 
     .info, .experience {
@@ -420,19 +392,13 @@ nav {
     }
 
     .profile img {
-        max-width: 100%; /* This is good, ensures it scales within .profile container */
-        /* Consider adding margin auto if centering is desired when profile stacks */
-        /* display: block; margin-left: auto; margin-right: auto; */
+        max-width: 100%; 
+        
+        
     }
 
     .nav-button {
         padding: 8px 12px;
-    }
-    
-    nav {
-        /* Optional: if buttons crowd, center them */
-        /* justify-content: center; */ 
-        /* flex-wrap: wrap; */ /* Allow wrapping if too many buttons */
     }
 
     .social-links {
@@ -440,35 +406,35 @@ nav {
         margin-top: 1em;
     }
 
-    /* Typography adjustments for 768px */
+    
     body {
-        font-size: 0.95rem; /* Approx 15.2px if base is 16px */
+        font-size: 0.95rem; 
         line-height: 1.5;
     }
 
-    h1 { font-size: 2rem; }   /* Example: Adjust as needed */
+    h1 { font-size: 2rem; }   
     h2 { font-size: 1.75rem; }
     h3 { font-size: 1.5rem; }
 
 }
 
-/* Small phone improvements */
+
 @media (max-width: 480px) {
     .wide-page, .narrow-page {
-        padding: 15px; /* Further reduce padding */
+        padding: 15px; 
     }
 
     .nav-button {
         font-size: 14px;
-        padding: 7px 10px; /* Slightly adjust padding */
+        padding: 7px 10px; 
     }
 
     .portfolio {
-        padding: 15px; /* Consistent with other sections */
+        padding: 15px; 
     }
     
     .blog-grid {
-        padding: 15px; /* Consistent padding */
+        padding: 15px; 
     }
 
     .blog-card {
@@ -476,7 +442,7 @@ nav {
     }
     
     .blog-post {
-        padding: 15px; /* Consistent padding */
+        padding: 15px; 
     }
 
     .experience-item {
@@ -496,17 +462,17 @@ nav {
     }
 
     .experience-title-item .experience-description {
-        width: 100%; /* Ensure description takes full width below date on mobile */
-        margin-top: 0.5em; /* Add space between date and description on mobile */
+        width: 100%; 
+        margin-top: 0.5em; 
     }
 
     .portfolio {
         padding: 15px;
     }
 
-    /* Typography adjustments for 480px */
+    
     body {
-        font-size: 0.9rem; /* Approx 14.4px */
+        font-size: 0.9rem; 
         line-height: 1.45;
     }
     h1 { font-size: 1.8rem; }
@@ -515,7 +481,7 @@ nav {
     h4 { font-size: 1.2rem; }
 }
 
-/* Very small phone improvements */
+
 @media (max-width: 360px) {
     .wide-page, .narrow-page {
         padding: 10px;
@@ -531,11 +497,11 @@ nav {
     }
     
     nav {
-        gap: 10px; /* Reduce gap between nav buttons */
+        gap: 10px; 
     }
 
     body {
-        font-size: 0.85rem; /* Approx 13.6px */
+        font-size: 0.85rem; 
         line-height: 1.4;
     }
 
@@ -545,7 +511,7 @@ nav {
     h4 { font-size: 1.1rem; }
 }
 
-/* Keep the footnotes specific styling, can be merged or kept separate */
+
 @media (max-width: 450px){
     /* This profile img rule is redundant if the 768px one is max-width: 100% 
        and .profile container scales. However, it doesn't hurt. */
@@ -579,17 +545,17 @@ main {
 }
 
 blockquote {
-    border-left: 4px solid #3498db; /* Accent Color */
+    border-left: 4px solid #3498db; 
     margin: 1.5em 0;
     padding: 1em 1.5em;
-    background-color: #fdfefe; /* Very light shade of accent or white */
+    background-color: #fdfefe; 
     border-radius: 0 4px 4px 0;
-    color: #2c3e50; /* Primary Text */
+    color: #2c3e50; 
 }
 
 blockquote>blockquote {
-    background-color: #f4f6f7; /* Slightly darker for nested */
-    border-left-color: #2980b9; /* Darker Accent */
+    background-color: #f4f6f7; 
+    border-left-color: #2980b9; 
 }
 
 table {
@@ -601,22 +567,22 @@ table {
 
 th,
 td {
-    border: 1px solid #bdc3c7; /* Subtle Border for table cells */
+    border: 1px solid #bdc3c7; 
     padding: 12px;
     text-align: left;
 }
 
 th {
-    background-color: #34495e; /* Darker shade of primary text */
-    color: #ffffff; /* White text on th */
+    background-color: #34495e; 
+    color: #ffffff; 
 }
 
 tr:nth-child(even) {
-    background-color: #fdfefe; /* Lighter background for even rows, close to white */
+    background-color: #fdfefe; 
 }
 
 details {
-    border: 1px solid #bdc3c7; /* Subtle Border */
+    border: 1px solid #bdc3c7; 
     border-radius: 4px;
     padding: 0.5em;
     margin: 1em 0;
@@ -636,18 +602,18 @@ summary {
     font-weight: bold;
     cursor: pointer;
     padding: 0.5em;
-    background-color: #fdfefe; /* Lighter background for summary */
+    background-color: #fdfefe; 
     border-radius: 4px;
 }
 
 details[open] summary {
-    border-bottom: 1px solid #bdc3c7; /* Subtle Border */
+    border-bottom: 1px solid #bdc3c7; 
     margin-bottom: 0.5em;
 }
 
 pre {
-    background-color: #f8f9fa; /* Keeping this light gray or use #ffffff */
-    border: 1px solid #bdc3c7; /* Subtle Border */
+    background-color: #f8f9fa; 
+    border: 1px solid #bdc3c7; 
     border-radius: 6px;
     padding: 1em;
     margin: 1em 0;
@@ -656,13 +622,13 @@ pre {
 
 code {
     font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace;
-    color: #c0392b; /* Reddish-brown for code */
+    color: #c0392b; 
 }
 
 p code {
     font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace;
-    color: #c0392b; /* Reddish-brown for code */
-    background-color: #f1f2f3; /* Very light gray for inline code */
+    color: #2c3e50; 
+    background-color: #f1f2f3; 
 }
 
 .math-block {
@@ -677,16 +643,4 @@ p code {
     margin: 0 auto;
     padding: 0.5em;
     box-sizing: border-box;
-}
-
-/* General link styling - if not covered by .social-links a */
-a {
-    color: #3498db; /* Accent Color */
-    text-decoration: none;
-    transition: color 0.3s ease; /* Added transition for general links */
-}
-
-a:hover {
-    color: #2980b9; /* Darker Accent for hover */
-    text-decoration: underline;
 }
