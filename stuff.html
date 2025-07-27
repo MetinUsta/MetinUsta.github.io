@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stuff | Portfolio & Blog</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body class="narrow-page">
+    <nav>
+        <a href="/" class="nav-button">Portfolio</a>
+        <a href="/blog.html" class="nav-button">Blog</a>
+        <a href="/stuff.html" class="nav-button active">Stuff</a>
+    </nav>
+    <main>
+        <section id="stuff" class="content">
+            <h1>My Stuff</h1>
+            <div class="stuff-grid" id="stuff-cards">
+                <!-- Cards will be rendered here -->
+            </div>
+        </section>
+    </main>
+    <script>
+        async function loadStuffCards() {
+            try {
+                const response = await fetch('/stuff/stuff.json');
+                const data = await response.json();
+                return data.cards;
+            } catch (error) {
+                console.error('Error loading stuff cards:', error);
+                return [];
+            }
+        }
+        async function renderStuffCards() {
+            const grid = document.getElementById('stuff-cards');
+            const cards = await loadStuffCards();
+            if (!cards.length) {
+                grid.innerHTML = '<p>No stuff found.</p>';
+                return;
+            }
+            grid.innerHTML = cards.map(card => `
+                <a href="${card.link}" class="stuff-card" style="background-color: ${card.theme || '#f9f9f9'}">
+                    <div class="stuff-card-bg">
+                        ${card.image ? `<img src="${card.image}" alt="${card.title} background" />` : ''}
+                    </div>
+                    <div class="stuff-card-content">
+                        <h2>${card.title}</h2>
+                        <p>${card.subtitle}</p>
+                    </div>
+                </a>
+            `).join('');
+        }
+        document.addEventListener('DOMContentLoaded', renderStuffCards);
+    </script>
+    <style>
+        .stuff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .stuff-card {
+            position: relative;
+            display: block;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            text-decoration: none;
+            color: inherit;
+            min-height: 180px;
+            transition: transform 0.12s;
+        }
+        .stuff-card:hover {
+            transform: translateY(-4px) scale(1.03);
+        }
+        .stuff-card-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.18;
+            z-index: 1;
+        }
+        .stuff-card-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .stuff-card-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem 1.5rem;
+        }
+    </style>
+</body>
+</html>
