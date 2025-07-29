@@ -31,7 +31,7 @@ let offsets = Array.from({ length: shapes.length }, () => Math.random() * 1000);
 
 function sketch(p) {
     p.setup = function () {
-        p5canvas = p.createCanvas(800, 800);
+        p5canvas = p.createCanvas(600, 800);
         strumSlider = document.getElementById('strumSlider');
 
         saveBtn = document.getElementById('saveBtn');
@@ -139,6 +139,7 @@ function sketch(p) {
     p.drawShape = function (color, height, strum, offset, index) {
         
         p.beginShape();
+        p.noStroke();
         p.vertex(0, p.height);
         var allShadowPoints = [];
         for (let x = 0; x < p.width; x++) {
@@ -168,6 +169,7 @@ function sketch(p) {
         p.fill(...color);
         // p.strokeWeight(2);
         // p.stroke(0);
+        p.noStroke();
         p.endShape();
 
         // Draw shadow points
@@ -183,6 +185,24 @@ function sketch(p) {
         }
     }
 
+    p.drawStars = function (count, color = [255, 255, 255], y_limit_lower, y_limit_upper, size_lower_limit = 2, size_upper_limit = 5) {
+        // should draw n circles between y_limit_lower and y_limit_upper
+        p.fill(...color);
+        p.noStroke();
+        let drawnCount = 0;
+        while (drawnCount < count) {
+            console.log(`drawnCount: ${drawnCount}, count: ${count}`);
+            let x = p.random(p.width);
+            let y = p.random(y_limit_lower, y_limit_upper);
+            if (y > y_limit_upper || y < y_limit_lower) {
+                continue; // Skip if outside the limits
+            }
+            let size = p.random(size_lower_limit, size_upper_limit);
+            p.ellipse(x, y, size, size);
+            drawnCount++;
+        }
+    }
+
     p.drawNRandomNumbers = function (mean, std, n) {
         var numbers = [];
         for (let i = 0; i < n; i++) {
@@ -195,7 +215,11 @@ function sketch(p) {
 
     p.draw = function () {
         strum = parseFloat(strumSlider.value);
-        p.background(240);
+        p.background(0);
+        p.drawStars(25, yellow_color, 0, 100, 4, 7);
+        // sun count is either 1 or 2
+        var sunCount = Math.floor(p.random(1, 3));
+        p.drawStars(sunCount, yellow_color, 0, 100, 35, 65);
         p.noStroke();
 
         for (let i = 1; i < 7; i++) {
@@ -204,6 +228,7 @@ function sketch(p) {
             offsets[i] += increment;
         }
         p.fill(0);
+
     }
 }
 
