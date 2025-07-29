@@ -709,6 +709,12 @@ p code {
     cursor: pointer;
     transition: background 0.2s;
 }
+
+/* space between consecutive buttons */
+#art-controls button + button {
+    margin-top: 0.5em;
+}
+
 #art-controls button:hover {
     background: var(--art-accent-hover);
 }

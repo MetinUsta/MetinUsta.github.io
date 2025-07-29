@@ -1,41 +1,162 @@
 let strumSlider, saveBtn;
 
-// Array of shape configurations
-let yellow_color = [222, 159, 66];
-let red_color = [240, 90, 37];
+let theme = 'Default';
 
-let darker_red_color = [198, 56, 46]
+class ColorPalette {
+    constructor(
+        primaryColor,
+        secondaryColor,
+        shadowColor,
+    ) {
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
+        this.shadowColor = shadowColor;
+    }
 
-const shapes = [
-    { height: 0, strum: 10, color: red_color, increment: 0.0005 },
-    { height: 200, strum: 9, color: yellow_color, increment: 0.001 },
-    { height: 400, strum: 10, color: red_color, increment: 0.002 },
-    { height: 600, strum: 9, color: yellow_color, increment: 0.003 },
-    { height: 800, strum: 10, color: red_color, increment: 0.005 },
-    { height: 1000, strum: 10, color: yellow_color, increment: 0.007 },
-    { height: 1200, strum: 15, color: red_color, increment: 0.01 }
-];
+    get primary() {
+        return this.primaryColor;
+    }
 
-const shadows = [
-    { mean: 0, std: 20, n: 100, limit: 15, y_limit_lower: 0, y_limit_upper: 800, strokeWeight: 4, x_sample_count: 100, color: darker_red_color },
-    { mean: 200, std: 20, n: 100, spacing: 8, limit: 15, y_limit_lower: 0, y_limit_upper: 800, strokeWeight: 2, color: darker_red_color },
-    { mean: 330, std: 35, n: 100, spacing: 8, limit: 15, y_limit_lower: 0, y_limit_upper: 800, strokeWeight: 2, color: darker_red_color },
-    { mean: 450, std: 50, n: 100, spacing: 8, limit: 15, y_limit_lower: 0, y_limit_upper: 800, strokeWeight: 2, color: darker_red_color },
-    { mean: 560, std: 50, n: 100, spacing: 8, limit: 15, y_limit_lower: 0, y_limit_upper: 800, strokeWeight: 2, color: darker_red_color },
-    { mean: 700, std: 60, n: 100, spacing: 8, limit: 15, y_limit_lower: 0, y_limit_upper: 800, strokeWeight: 2, color: darker_red_color },
-    { mean: 820, std: 50, n: 100, spacing: 8, limit: 15, y_limit_lower: 0, y_limit_upper: 800, strokeWeight: 2, color: darker_red_color },
-]
+    get secondary() {
+        return this.secondaryColor;
+    }
 
-// Initialize offsets randomly
-let offsets = Array.from({ length: shapes.length }, () => Math.random() * 1000);
+    get shadow() {
+        return this.shadowColor;
+    }
+}
+
+themes = {
+    Default: new ColorPalette(
+        [222, 159, 66], // primary yellow
+        [240, 90, 37], // secondary red
+        [198, 56, 46] // shadow darker red
+    ),
+    Cold: new ColorPalette(
+        [235, 242, 250], // primary light blue
+        [66, 122, 161], // secondary dark blue
+        [6, 71, 137] // shadow dark blue
+    ),
+    Emerald: new ColorPalette(
+        [254, 250, 224], // primary green
+        [96, 108, 56], // secondary dark green
+        [40, 54, 24] // shadow darker green
+    )
+};
+
+class Shadow {
+    constructor(
+        mean,
+        std,
+        pointCount,
+        jiggle,
+        verticalSpacing,
+        strokeWeight,
+        color,
+        shapeYLocation,
+        shapeHeight
+    ){
+        this.mean = mean;
+        this.std = std;
+        this.pointCount = pointCount;
+        this.jiggle = jiggle;
+        this.verticalSpacing = verticalSpacing;
+        this.strokeWeight = strokeWeight;
+        this.color = color;
+        this.shapeYLocation = shapeYLocation;
+        this.shapeHeight = shapeHeight;
+    }
+
+    draw(p, shapeYOutline) {
+        p.stroke(...this.color);
+        p.strokeWeight(this.strokeWeight);
+        p.noFill();
+
+        // Generate random numbers
+        
+        for (let x = 0; x < p.width; x++) {
+            let yMaxLimit = shapeYOutline[x]
+            // let center = this.mean + 400 * (1 / Math.abs(this.mean - yMaxLimit));
+            let amplitude_ratio = (this.shapeYLocation - yMaxLimit) / this.shapeHeight;
+            let spread = this.std + 3 * amplitude_ratio;
+            let center = this.mean - 20 * amplitude_ratio;
+            var numbers = p.drawNRandomNumbers(center, spread, this.pointCount);
+            // Draw points with random offsets
+            for (let i = 0; i < numbers.length; i++) {
+                let y = numbers[i]; // Map to canvas height
+                let randomOffset = p.random(-this.jiggle, this.jiggle); // Random offset for each point
+                y += randomOffset; // Apply the random offset
+    
+                if (y > (yMaxLimit + this.verticalSpacing)) {
+                    p.point(x, y);
+                }
+            }
+
+        }
+
+    }
+}
+
+class SandDune {
+    constructor(
+        yLocation,
+        height,
+        color,
+        shadow
+    ){
+        this.yLocation = yLocation;
+        this.height = height
+        this.color = color;
+        this.shadow = shadow; // Instance of Shadow class
+    }
+
+    draw(p, offset) {
+        p.beginShape();
+        p.noStroke();
+        // p.stroke(...this.color);
+        p.noFill();
+        p.vertex(0, p.height);
+        let shapeYOutline = [];
+        for (let x = 0; x < p.width; x++) {
+            let angle = offset + x * 0.01;
+            let y = this.yLocation + p.map(p.sin(angle), -1, 1, -this.height, this.height);
+            shapeYOutline.push(y);
+            p.vertex(x, y);
+        }
+        p.vertex(p.width, p.height);
+        p.fill(...this.color);
+        // p.noStroke();
+        p.endShape();
+
+        // Draw shadow if it exists
+        if (this.shadow) {
+            this.shadow.draw(p, shapeYOutline);
+        }
+    }
+}
+
+class Star {
+    constructor(x, y, size, color) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+    }
+
+    draw(p) {
+        p.fill(...this.color);
+        p.noStroke();
+        p.ellipse(this.x, this.y, this.size, this.size);
+    }
+}
 
 function sketch(p) {
     p.setup = function () {
         p5canvas = p.createCanvas(600, 800);
-        strumSlider = document.getElementById('strumSlider');
+        
+        themeSelect = document.getElementById('themeSelect');
 
         saveBtn = document.getElementById('saveBtn');
-
         saveBtn.addEventListener('click', () => {
             let link = document.createElement('a');
             link.download = 'dune_art.png';
@@ -43,162 +164,32 @@ function sketch(p) {
             link.click();
         });
 
-        var numbers = p.drawNRandomNumbers(900, 100, 200);
+        redrawBtn = document.getElementById('redrawBtn');
+        redrawBtn.addEventListener('click', () => {
+            p.clear(); // Clear the canvas before redrawing
+            theme = themeSelect.value;
+            p.drawCover(theme);
+        });
+
         p.noLoop(); // Prevent continuous drawing
-        p.background(240);
-
-        let spacing = 8;
-        let limit = 15;
-
-        // draw points
-        for (let k = 0; k < 100; k++) {
-            let x = k * spacing; // Adjust spacing between points
-            for (let i = 0; i < numbers.length; i++) {
-                let y = numbers[i]; // Map to canvas height
-                let randomOFfset = p.random(-limit, limit); // Random offset for each point
-                y += randomOFfset; // Apply the random offset
-                p.stroke(0);
-                p.strokeWeight(4);
-                p.point(x, y);
-            }
-        }
     };
 
-    p.drawShadowPlane = function (
-        mean,
-        std,
-        n,
-        spacing,
-        limit,
-        y_limit_lower,
-        y_limit_upper,
-        strokeWeight,
-        x_sample_count,
-        color = [0, 0, 0]
-    ) {
-        p.stroke(...color);
-        p.strokeWeight(strokeWeight);
-        p.noFill();
-
-        // Generate random numbers
-        var numbers = p.drawNRandomNumbers(mean, std, n);
-
-        // Draw points with random offsets
-        for (let k = 0; k < x_sample_count; k++) {
-            let x = k * spacing; // Adjust spacing between points
-            for (let i = 0; i < numbers.length; i++) {
-                let y = numbers[i]; // Map to canvas height
-                let randomOFfset = p.random(-limit, limit); // Random offset for each point
-                y += randomOFfset; // Apply the random offset
-
-                if (y > y_limit_upper && y < y_limit_lower) {
-                    p.point(x, y);
-                }
-            }
-        }
-    }
-
-    p.drawShadowLine = function (
-        mean,
-        std,
-        n,
-        x,
-        limit,
-        y_limit_lower,
-        y_limit_upper,
-        strokeWeight,
-        color = [0, 0, 0]
-    ) {
-        p.stroke(...color);
-        p.strokeWeight(strokeWeight);
-        p.noFill();
-
-        // Generate random numbers
-        var numbers = p.drawNRandomNumbers(mean, std, n);
-        var points = [];
-
-        // Draw points with random offsets
-        for (let i = 0; i < numbers.length; i++) {
-            let y = numbers[i]; // Map to canvas height
-            let randomOFfset = p.random(-limit, limit); // Random offset for each point
-            y += randomOFfset; // Apply the random offset
-
-            console.log(`x: ${x}, y: ${y}, randomOffset: ${randomOFfset} y_limit_upper: ${y_limit_upper}, y_limit_lower: ${y_limit_lower}`);
-
-            if (y > y_limit_upper + 30) {
-                points.push([x, y]);
-                // p.point(x, y);
-                // console.log(`Drawing point at x: ${x}, y: ${y} with offset: ${randomOFfset}`);
-            }
-        }
-
-        return points;
-
-    }
-
-    p.drawShape = function (color, height, strum, offset, index) {
-        
-        p.beginShape();
-        p.noStroke();
-        p.vertex(0, p.height);
-        var allShadowPoints = [];
-        for (let x = 0; x < p.width; x++) {
-            let angle = offset + x * 0.01;
-            let y = p.map(p.sin(angle), -strum, strum, 0, height);
-            // console.log(`x: ${x}, y: ${y}, offset: ${offset} p.sin(angle): ${p.sin(angle)}`);
-            p.vertex(x, y);
-
-            // draw shadow lines for each x value. use the index to determine which shadow to draw.
-            if (index < shadows.length) {
-                const shadow = shadows[index];
-                var shadowPoints = p.drawShadowLine(
-                    shadow.mean,
-                    shadow.std,
-                    shadow.n,
-                    x,
-                    shadow.limit,
-                    height,
-                    y,
-                    shadow.strokeWeight,
-                    shadow.color
-                );
-                allShadowPoints.push(...shadowPoints);
-            }
-        }
-        p.vertex(p.width, p.height);
-        p.fill(...color);
-        // p.strokeWeight(2);
-        // p.stroke(0);
-        p.noStroke();
-        p.endShape();
-
-        // Draw shadow points
-        if (index < shadows.length) {
-            const shadow = shadows[index];
-            p.stroke(...shadow.color);
-            p.strokeWeight(shadow.strokeWeight);
-            p.noFill();
-            for (let point of allShadowPoints) {
-                p.point(point[0], point[1]);
-                
-            }
-        }
-    }
-
-    p.drawStars = function (count, color = [255, 255, 255], y_limit_lower, y_limit_upper, size_lower_limit = 2, size_upper_limit = 5) {
-        // should draw n circles between y_limit_lower and y_limit_upper
-        p.fill(...color);
-        p.noStroke();
+    p.drawStars = function (count, color = [255, 255, 255], yMinLimit, yMaxLimit, sizeMinLimit = 2, sizeMaxLimit = 5) {
+        // should draw n circles between yMinLimit and yMaxLimit
         let drawnCount = 0;
         while (drawnCount < count) {
-            console.log(`drawnCount: ${drawnCount}, count: ${count}`);
             let x = p.random(p.width);
-            let y = p.random(y_limit_lower, y_limit_upper);
-            if (y > y_limit_upper || y < y_limit_lower) {
+            let y = p.random(yMinLimit, yMaxLimit);
+
+            if (y > yMaxLimit || y < yMinLimit) {
                 continue; // Skip if outside the limits
             }
-            let size = p.random(size_lower_limit, size_upper_limit);
-            p.ellipse(x, y, size, size);
+
+            let size = p.random(sizeMinLimit, sizeMaxLimit);
+
+            let star = new Star(x, y, size, color);
+            star.draw(p);
+
             drawnCount++;
         }
     }
@@ -213,22 +204,63 @@ function sketch(p) {
         return numbers;
     }
 
-    p.draw = function () {
-        strum = parseFloat(strumSlider.value);
+    p.drawCover = function (theme) {
+        const shapes = [
+            { yLocation: 200, color: themes[theme].primary },
+            { yLocation: 300, color: themes[theme].secondary },
+            { yLocation: 400, color: themes[theme].primary },
+            { yLocation: 500, color: themes[theme].secondary },
+            { yLocation: 600, color: themes[theme].primary },
+            { yLocation: 700, color: themes[theme].secondary }
+        ];
+        
+        const shadows = [
+            { mean: 330, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 430, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 530, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 630, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 730, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 830, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+        ]
+
         p.background(0);
-        p.drawStars(25, yellow_color, 0, 100, 4, 7);
-        // sun count is either 1 or 2
-        var sunCount = Math.floor(p.random(1, 3));
-        p.drawStars(sunCount, yellow_color, 0, 100, 35, 65);
         p.noStroke();
 
-        for (let i = 1; i < 7; i++) {
-            const { height, strum: shapeStrum, color, increment } = shapes[i];
-            p.drawShape(color, height, shapeStrum, offsets[i], i);
-            offsets[i] += increment;
+        p.drawStars(40, themes[theme].primary, 0, 300, 4, 7);
+
+        // sun count is either 1 or 2
+        var sunCount = Math.floor(p.random(1, 3));
+        p.drawStars(sunCount, themes[theme].primary, 0, 100, 35, 65);
+
+        for (let i = 0; i < shapes.length; i++) {
+            const { yLocation, color } = shapes[i];
+            const shadowConfig = shadows[i];
+            shapeHeight = p.random(30, 50);
+
+            const shadow = new Shadow(
+                shadowConfig.mean,
+                shadowConfig.std,
+                shadowConfig.pointCount,
+                shadowConfig.jiggle,
+                shadowConfig.verticalSpacing,
+                shadowConfig.strokeWeight,
+                shadowConfig.color,
+                yLocation,
+                shapeHeight
+            );
+
+            const dune = new SandDune(yLocation, shapeHeight, color, shadow);
+
+            let offset = p.random(0, 100);
+            dune.draw(p, offset);
         }
         p.fill(0);
+    }
 
+    p.draw = function () {
+        theme = themeSelect.value;
+        console.log(`Drawing with theme: ${theme}`);
+        p.drawCover(theme);
     }
 }
 
