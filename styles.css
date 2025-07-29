@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700;900&display=swap');
 
+:root {
+    --art-accent: #2267e6; /* Default accent color */
+    --art-accent-hover: #1a4fa0; /* Darker shade for hover effects */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -643,4 +648,98 @@ p code {
     margin: 0 auto;
     padding: 0.5em;
     box-sizing: border-box;
+}
+
+/* Minimal controls styling for dune.html (art-) */
+#art-controls {
+    background: var(--art-controls-bg, #fff);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 1.5rem 1.2rem;
+    font-family: inherit;
+    border: 1px solid var(--art-controls-border, #eee);
+}
+#art-controls h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+#art-controls label {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    font-size: 0.98em;
+    margin-bottom: 0.7em;
+}
+#art-controls input[type="color"],
+#art-controls input[type="range"],
+#art-controls input[type="text"],
+#art-controls select {
+    border: 1px solid var(--art-input-border, #ccc);
+    border-radius: 6px;
+    background: var(--art-input-bg, #fafafa);
+    color: var(--art-input-color, #222);
+    padding: 0.3em 0.7em;
+    font-size: 1em;
+    outline: none;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+#art-controls input[type="range"] {
+    padding: 0;
+    width: 120px;
+}
+#art-controls input[type="color"] {
+    padding: 0.1em;
+    width: 2em;
+    height: 2em;
+    border-radius: 6px;
+}
+#art-controls input[type="checkbox"] {
+    accent-color: var(--art-accent);
+    width: 1.1em;
+    height: 1.1em;
+}
+#art-controls button {
+    background: var(--art-accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5em 1.2em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+/* space between consecutive buttons */
+#art-controls button + button {
+    margin-top: 0.5em;
+}
+
+#art-controls button:hover {
+    background: var(--art-accent-hover);
+}
+/* Responsive text input fix */
+#art-controls input[type="text"] {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+/* Dark mode styles */
+.art-dark-mode {
+    --art-controls-bg: #181a1b;
+    --art-controls-border: #222;
+    --art-input-bg: #232526;
+    --art-input-color: #eee;
+    --art-input-border: #333;
+    --art-accent: #e67e22;
+}
+.art-dark-mode #art-controls {
+    color: #eee;
+}
+.art-dark-mode #art-controls button {
+    color: #fff;
+}
+/* Optional: smooth transition */
+body, #art-controls, #art-controls input, #art-controls select, #art-controls button {
+    transition: background 0.2s, color 0.2s, border 0.2s;
 }

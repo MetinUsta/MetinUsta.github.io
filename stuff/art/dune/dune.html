@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Art Example</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body class="narrow-page">
+    <!-- To enable dark mode from code, add 'art-dark-mode' to the body class -->
+    <!-- Example: document.body.classList.add('art-dark-mode'); -->
+    <nav>
+        <a href="/" class="nav-button">Portfolio</a>
+        <a href="/blog.html" class="nav-button">Blog</a>
+        <a href="/stuff.html" class="nav-button">Stuff</a>
+    </nav>
+    <main>
+        <h1>Dune</h1>
+        <section class="content" style="display: flex; gap: 2rem; align-items: flex-start;">
+            <div id="p5-container" style="display: flex; justify-content: center; align-items: center; min-height: 400px;"></div>
+            <div id="art-controls" style="min-width: 220px;">
+                <h2>Controls</h2>
+                <label>Theme:
+                    <select id="themeSelect">
+                        <option value="Default">Default</option>
+                        <option value="Cold">Cold</option>
+                        <option value="Emerald">Emerald</option>
+                    </select>
+                </label>
+                <button id="redrawBtn">Draw</button>
+                <!-- line break -->
+                <button id="saveBtn">Save Canvas</button>
+            </div>
+        </section>
+    </main>
+    <script src="dune.js"></script>
+</body>
+</html>
