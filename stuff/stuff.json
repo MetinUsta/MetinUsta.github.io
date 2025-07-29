@@ -1,18 +1,10 @@
 {
   "cards": [
     {
-      "title": "Template",
-      "subtitle": "Art Template",
-      "link": "stuff/art/template/template.html",
-      "theme": "#e0f7fa",
-      "image": "../assets/peter_griffin_wait_a_minute.jpg"
-    },
-    {
       "title": "DUNE",
       "subtitle": "Sand dune illustrations inspired by DUNE book covers",
       "link": "stuff/art/dune/dune.html",
-      "theme": "#e0f7fa",
-      "image": "../assets/peter_griffin_wait_a_minute.jpg"
+      "theme": "#f0f4ff"
     }
   ]
 }

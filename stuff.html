@@ -41,7 +41,7 @@
                 return;
             }
             grid.innerHTML = cards.map(card => `
-                <a href="${card.link}" class="stuff-card" style="background-color: ${card.theme || '#f9f9f9'}">
+                <a href="${card.link}" class="stuff-card" style="background-color: ${card.theme || '#fff'};">
                     <div class="stuff-card-bg">
                         ${card.image ? `<img src="${card.image}" alt="${card.title} background" />` : ''}
                     </div>
@@ -62,15 +62,18 @@
             margin-top: 2rem;
         }
         .stuff-card {
+            padding: 20px;
+            background-color: #ffffff; 
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: #2c3e50; 
             position: relative;
             display: block;
-            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            text-decoration: none;
-            color: inherit;
             min-height: 180px;
-            transition: transform 0.12s;
         }
         .stuff-card:hover {
             transform: translateY(-4px) scale(1.03);
