@@ -10,7 +10,19 @@
       "title": "Triangles",
       "subtitle": "All along the triangles",
       "link": "stuff/art/triangles/triangles.html",
-      "theme": "#D5E3A5"
+      "theme": "#BFEDCA"
+    },
+    {
+      "title": "Footsteps",
+      "subtitle": "Pink Panther Show inspired footsteps",
+      "link": "stuff/art/footsteps/footsteps.html",
+      "theme": "#E7A2A2"
+    },
+    {
+      "title": "Bokeh",
+      "subtitle": "Not the bokeh you would expect",
+      "link": "stuff/art/bokeh/bokeh.html",
+      "theme": "#D0C6E1"
     }
   ]
 }
