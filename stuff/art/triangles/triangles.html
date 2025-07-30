@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Art Example</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body class="narrow-page">
+    <!-- To enable dark mode from code, add 'art-dark-mode' to the body class -->
+    <!-- Example: document.body.classList.add('art-dark-mode'); -->
+    <nav>
+        <a href="/" class="nav-button">Portfolio</a>
+        <a href="/blog.html" class="nav-button">Blog</a>
+        <a href="/stuff.html" class="nav-button">Stuff</a>
+    </nav>
+    <main>
+        <h1>Triangles</h1>
+        <h5>Try clicking on the canvas</h3>
+        <section class="content" style="display: flex; gap: 2rem; align-items: flex-start;">
+            <div id="p5-container" style="display: flex; justify-content: center; align-items: center; min-height: 400px;"></div>
+            <div id="art-controls" style="min-width: fit-content;">
+                <h2>Controls</h2>
+                <label>Show Lines:
+                    <input type="checkbox" id="showLines" checked>
+                </label>
+                <label>Show Incircle:
+                    <input type="checkbox" id="showIncircle">
+                </label>
+                <label>Theme:
+                    <select id="themeSelect">
+                        <option value="0">Pastel</option>
+                        <option value="1">Blue-Green</option>
+                        <option value="2">Heatmap</option>
+                        <option value="3">Cyan-Magenta</option>
+                        <option value="4">Browns</option>
+                        <option value="5">Black - Red - White</option>
+                        <option value="6">Washed Colors</option>
+                    </select>
+                </label>
+                <button id="downloadBtn">Save Canvas</button>
+                <button id="clearBtn">Clear Triangles</button>
+            </div>
+        </section>
+    </main>
+    <script src="triangles.js"></script>
+</body>
+</html>
