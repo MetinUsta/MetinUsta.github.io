@@ -71,6 +71,7 @@ class Shadow {
         p.stroke(...this.color);
         p.strokeWeight(this.strokeWeight);
         p.noFill();
+        const [r, g, b] = this.color;
 
         // Generate random numbers
         
@@ -88,7 +89,12 @@ class Shadow {
                 y += randomOffset; // Apply the random offset
     
                 if (y > (yMaxLimit + this.verticalSpacing)) {
-                    p.point(x, y);
+                    let py = Math.floor(y);
+                    const index = (py * p.width + x) * 4;
+                    p.pixels[index] = r;
+                    p.pixels[index + 1] = g;
+                    p.pixels[index + 2] = b;
+                    p.pixels[index + 3] = 255;
                 }
             }
 
@@ -128,10 +134,13 @@ class SandDune {
         // p.noStroke();
         p.endShape();
 
+        p.loadPixels();
+
         // Draw shadow if it exists
         if (this.shadow) {
             this.shadow.draw(p, shapeYOutline);
         }
+        p.updatePixels();
     }
 }
 
