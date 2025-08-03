@@ -224,12 +224,12 @@ function sketch(p) {
         ];
         
         const shadows = [
-            { mean: 330, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
-            { mean: 430, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
-            { mean: 530, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
-            { mean: 630, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
-            { mean: 730, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
-            { mean: 830, std: 30, pointCount: 150, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 330, std: 30, pointCount: 500, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 430, std: 30, pointCount: 500, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 530, std: 30, pointCount: 500, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 630, std: 30, pointCount: 500, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 730, std: 30, pointCount: 500, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
+            { mean: 830, std: 30, pointCount: 500, jiggle: 15, verticalSpacing: 5, strokeWeight: 1, color: themes[theme].shadow },
         ]
 
         p.background(0);
