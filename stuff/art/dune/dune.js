@@ -162,6 +162,7 @@ class Star {
 function sketch(p) {
     p.setup = function () {
         p5canvas = p.createCanvas(600, 800);
+        p.pixelDensity(1);
         
         themeSelect = document.getElementById('themeSelect');
 
