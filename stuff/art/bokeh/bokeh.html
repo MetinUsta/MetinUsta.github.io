@@ -10,11 +10,7 @@
 <body class="narrow-page">
     <!-- To enable dark mode from code, add 'art-dark-mode' to the body class -->
     <!-- Example: document.body.classList.add('art-dark-mode'); -->
-    <nav>
-        <a href="/" class="nav-button">Portfolio</a>
-        <a href="/blog.html" class="nav-button">Blog</a>
-        <a href="/stuff.html" class="nav-button">Stuff</a>
-    </nav>
+    <nav data-site-nav data-active="stuff"></nav>
     <main>
         <h1>Bokeh</h1>
         <h5>Try dragging your cursor on the canvas</h3>
@@ -40,6 +36,7 @@
             </div>
         </section>
     </main>
-    <script src="bokeh.js"></script>
+    <script type="module" src="../../../assets/js/art-page.js"></script>
+    <script type="module" src="bokeh.js"></script>
 </body>
 </html>

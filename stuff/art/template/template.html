@@ -10,11 +10,7 @@
 <body class="narrow-page">
     <!-- To enable dark mode from code, add 'art-dark-mode' to the body class -->
     <!-- Example: document.body.classList.add('art-dark-mode'); -->
-    <nav>
-        <a href="/" class="nav-button">Portfolio</a>
-        <a href="/blog.html" class="nav-button">Blog</a>
-        <a href="/stuff.html" class="nav-button">Stuff</a>
-    </nav>
+    <nav data-site-nav data-active="stuff"></nav>
     <main>
         <h1>Test</h1>
         <section class="content" style="display: flex; gap: 2rem; align-items: flex-start;">
@@ -43,6 +39,7 @@
             </div>
         </section>
     </main>
+    <script type="module" src="../../../assets/js/art-page.js"></script>
     <script src="template.js"></script>
 </body>
 </html>
